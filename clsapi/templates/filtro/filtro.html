@@ -1,0 +1,13 @@
+{% extends 'clsapi/baseFiltro.html' %}
+
+{% block content %}
+
+{% for filtro in clsapi %}
+
+    <div>
+        <h2><a href="{% url 'filtro_detail' pk=filtro.pk %}">{{ filtro.descricao }}</a></h2>
+        <p>Id: {{ filtro.id|linebreaksbr }}</p>
+    </div>
+{% endfor %}
+
+{% endblock %}

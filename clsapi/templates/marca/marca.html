@@ -1,0 +1,13 @@
+{% extends 'clsapi/baseMarca.html' %}
+
+{% block content %}
+
+{% for marca in clsapi %}
+
+    <div>
+        <h2><a href="{% url 'marca_detail' pk=marca.pk %}">{{ marca.descricao }}</a></h2>
+        <p>Id: {{ marca.id|linebreaksbr }}</p>
+    </div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'clsapi/baseUnidade.html' %}
+
+{% block content %}
+
+{% for unidade in clsapi %}
+
+    <div>
+        <h2><a href="{% url 'unidade_detail' pk=unidade.pk %}">{{ unidade.descricao }}</a></h2>
+        <p>Id: {{ unidade.id|linebreaksbr }}</p>
+    </div>
+{% endfor %}
+
+{% endblock %}
