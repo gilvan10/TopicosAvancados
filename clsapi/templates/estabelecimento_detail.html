@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        {% if user.is_authenticated %}
+            <a class="btn btn-default" href="{% url 'estabelecimento_edit' pk=estabelecimento.pk %}">[Editar]</a>
+            <a class="btn btn-default" href="{% url 'estabelecimento_delete' pk=estabelecimento.pk %}">[Apagar]</a>
+        {% endif %}
+        <h2>{{ estabelecimento.descricao }}</h2>
+    </div>
+</body>
+</html>

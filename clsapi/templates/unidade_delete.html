@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% extends 'clsapi/baseUnidade.html' %}
+    {% block content %}
+        <h1>Deletar unidade</h1>
+        <form method="POST" class="post-form">{% csrf_token %}
+            Você tem certeza que deseja excluir esse unidade?
+            <p>Descricao: <strong>{{unidade.descricao}}</strong></p>
+            <button type="submit" class="save btn btn-default">Confirma Exclusão!</button>
+        </form>
+    {% endblock %}
+</body>
+</html>

@@ -10,5 +10,11 @@
         <p>Localizacao: {{ estabelecimento.localizacao|linebreaksbr }}</p>
     </div>
 {% endfor %}
+    <h1>Novo Estabelecimento</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        <p><label>Descricao:</label> <input type="text" name="descricao"></p>
+        <p><label>localizacao:</label> <input type="text" name="localizacao"></p>
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
 
 {% endblock %}
