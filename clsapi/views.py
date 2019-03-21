@@ -1,15 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Estabelecimento
 from .models import Marca
 from .models import Unidade
 from .models import Filtro
 from django.shortcuts import redirect
-from . import urls
 from .formsEstabelecimento import EstabelecimentoForm
 from .formsFiltro import FiltroForm
 from .formsMarca import MarcaForm
 from .formsUnidade import UnidadeForm
+from . import urls
 
 # Create your views here.
 
@@ -17,8 +17,8 @@ def index(request):
     return HttpResponse("Olá, Mundo. Você está na página index de clsapi")
 
 def estabelecimento(request):
-    estabelecimento = Estabelecimento.objects.order_by('descricao')
-    return render(request, 'clspai/estabelecimeto.html', {'clsapi': clsapi})
+    estabelecimentos = Estabelecimento.objects.order_by('descricao')
+    return render(request, 'estabelecimento/estabelecimento.html', {'estabelecimentos': estabelecimentos})
 
 def marca(request):
     marca = Marca.objects.order_by('descricao')
@@ -34,72 +34,76 @@ def filtro(request):
 
 def estabelecimento_new(request):
     if request.method == "POST":
-        estabelecimento = EstabelecimentoForm(request.POST)
-        if estabelecimento.is_valid():
-           estabecimentoExtra = estabelecimento.save(commit=False)
-           estabelecimento.descricao = request.descricao
-           estabelecimento.localizacao = request.localizacao
-           estabecimentoExtra.save()
+        form = EstabelecimentoForm(request.POST)
+        if form.is_valid():
+           estabelecimento = form.save(commit=False)
+           estabelecimento.save()
            return redirect('estabelecimento_detail', pk=estabelecimento.pk)
-        else:
-            estabelecimento = EstabelecimentoForm()
-            return render(request, 'clsapi/estabelecimento_edit.html', {'estabelecimento': estabelecimento})
+    else:
+        form = EstabelecimentoForm()
+    return render(request, 'estabelecimento/estabelecimento_edit.html', {'form': form})
+    #return HttpResponse("Olá, Mundo. Você está na página index de clsapi")
 
 def filtro_new(request):
     if request.method == "POST":
-        filtro = FiltroForm(request.POST)
-        if filtro.is_valid():
-           filtroExtra = filtro.save(commit=False)
-           filtro.descricao = request.descricao
-           filtroExtra.save()
+        form = FiltroForm(request.POST)
+        if form.is_valid():
+           filtro = filtro.save(commit=False)
+           filtro.save()
            return redirect('filtro_detail', pk=filtro.pk)
-        else:
-            filtro = FiltroForm()
-            return render(request, 'clsapi/filtro_edit.html', {'filtro': filtro})
+    else:
+        form = FiltroForm()
+    return render(request, 'clsapi/filtro_edit.html', {'form': form})
 
 def marca_new(request):
     if request.method == "POST":
-        marca = MarcaForm(request.POST)
-        if marca.is_valid():
-            marcaExtra = marca.save(commit=False)
-            marca.descricao = request.descricao
-            marcaExtra.save()
+        form = MarcaForm(request.POST)
+        if form.is_valid():
+            marca = marca.save(commit=False)
+            marca.save()
             return redirect('marca_detail', pk=marca.pk)
-        else:
-            marca = MarcaForm()
-            return render(request, 'clsapi/marca_edit.html', {'marca': marca})
+    else:
+        form = MarcaForm()
+    return render(request, 'clsapi/marca_edit.html', {'form': form})
 
 def unidade_new(request):
     if request.method == "POST":
-        unidade = UnidadeForm(request.POST)
-        if unidade.is_valid():
-            unidadeExtra = unidade.save(commit=False)
-            unidade.descricao = request.descricao
-            unidadeExtra.save()
+        form = UnidadeForm(request.POST)
+        if form.is_valid():
+            unidade = unidade.save(commit=False)
+            unidade.save()
             return redirect('unidade_detail', pk=unidade.pk)
-        else:
-            unidade = UnidadeForm()
-            return render(request, 'clsapi/unidade_edit.html', {'unidade': unidade})
+    else:
+         unidade = UnidadeForm()
+    return render(request, 'clsapi/unidade_edit.html', {'formu': form})
 
-def estabelecimento_detail(request):
+def estabelecimento_detail(request, pk):
+    estabelecimento = get_object_or_404(Estabelecimento,pk=pk)
+    return render(request, 'estabelecimento/estabelecimento_detail.html', {'estabelecimento': estabelecimento})
 
-def filtro_detail(request):
+def filtro_detail(request,pk):
+    filtro = get_object_or_404(Filtro, pk=pk)
+    return render(request, 'clsapi/filtro_detail', {'filtro': filtro})
 
-def marca_detail(request):
+def marca_detail(request,pk):
+    marca = get_object_or_404(Marca, pk=pk)
+    return render(request, 'clsapi/marca_detail', {'marca': marca})
 
-def unidade_detail(request):
+def unidade_detail(request,pk):
+    unidade = get_object_or_404(Unidade, pk=pk)
+    return render(request, 'clsapi/unidade_detail', {'unidade': unidade})
 
 def estabelecimento_edit(request, pk):
     estabelecimento = get_object_or_404(Estabelecimento, pk=pk)
     if request.method == "POST":
-        estabelecimentoExtra = EstabelecimentoForm(request.POST, instance=estabelecimento)
-        if estabelecimentoExtra.is_valid():
-            estabelecimento = estabelecimentoExtra.save(commit=False)
-            livro.save()
+        form = EstabelecimentoForm(request.POST, instance=estabelecimento)
+        if form.is_valid():
+            estabelecimento = form.save(commit=False)
+            estabelecimento.save()
             return redirect('estabelecimento_detail', pk=estabelecimento.pk)
     else:
-        estabelecimentoExtra = EstabelecimentoForm(instance=estabelecimento)
-        return render(request, 'clsapi/estabelecimento_edit.html', {'estabelecimentoExtra': estabelecimentoExtra})
+        form = EstabelecimentoForm(instance=estabelecimento)
+    return render(request, 'estabelecimento/estabelecimento_edit.html', {'form': form})
 
 def filtro_edit(request, pk):
     filtro = get_object_or_404(Filtro, pk=pk)
@@ -145,7 +149,7 @@ def estabelecimento_delete(request, pk):
         return redirect('estabelecimento')
     else:
         estabelecimentoExtra = EstabelecimentoForm(instance=estabelecimento)
-        return render(request, 'clsapi/estabelecimento_delete.html', {'estabelecimento': estabelecimento})
+        return render(request, 'estabelecimento/estabelecimento_delete.html', {'estabelecimento': estabelecimento})
 
 def filtro_delete(request, pk):
     filtro = get_object_or_404(Filtro, pk=pk)

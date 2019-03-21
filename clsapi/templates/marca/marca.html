@@ -2,17 +2,12 @@
 
 {% block content %}
 
-{% for marca in clsapi %}
+{% for marca in marcas %}
 
     <div>
         <h2><a href="{% url 'marca_detail' pk=marca.pk %}">{{ marca.descricao }}</a></h2>
         <p>Id: {{ marca.id|linebreaksbr }}</p>
     </div>
 {% endfor %}
-    <h1>Nova Marca</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        <p><label>Descricao:</label> <input type="text" name="descricao"></p>
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
 
 {% endblock %}

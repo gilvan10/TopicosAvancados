@@ -3,6 +3,6 @@ from .models import Marca
 
 class MarcaForm(forms.ModelForm):
 
-class Meta:
-    model = Marca
-    fields = ('id', 'descricao')
+    class Meta:
+        model = Marca
+        fields = ('id', 'descricao')

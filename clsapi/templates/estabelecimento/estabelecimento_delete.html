@@ -1,0 +1,10 @@
+
+{% extends 'estabelecimento/baseEstabelecimento.html' %}
+{% block content %}
+    <h1>Deletar estabelecimento</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        Você tem certeza que deseja excluir esse estabelecimento?
+        <p>Descricao: <strong>{{estabelecimento.descricao}}</strong></p>
+        <button type="submit" class="save btn btn-default">Confirma Exclusão!</button>
+    </form>
+{% endblock %}

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'clsapi/baseUnidade.html' %}
+
+{% block content %}
     <div>
         {% if user.is_authenticated %}
             <a class="btn btn-default" href="{% url 'unidade_edit' pk=unidade.pk %}">[Editar]</a>
@@ -12,5 +8,4 @@
         {% endif %}
         <h2>{{ unidade.descricao }}</h2>
     </div>
-</body>
-</html>
+{% endblock %}

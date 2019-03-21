@@ -1,0 +1,14 @@
+{% extends 'estabelecimento/baseEstabelecimento.html' %}
+
+{% block content %}
+
+{% for estabelecimento in estabelecimentos %}
+
+    <div>
+        <h2><a href="{% url 'estabelecimento_detail' pk=estabelecimento.pk %}">{{ estabelecimento.descricao }}</a></h2>
+        <p>Id: {{ estabelecimento.id }}</p>
+        <p>Localizacao: {{ estabelecimento.localizacao|linebreaksbr }}</p>
+    </div>
+{% endfor %}
+
+{% endblock %}
